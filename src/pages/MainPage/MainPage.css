@@ -1,0 +1,142 @@
+/* MainPage.css – Horizontal Scroll Shell */
+
+.main-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Horizontal track ── */
+.h-scroll-track {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.h-scroll-track::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Each section panel */
+.h-scroll-panel {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Remove any min-height that would break the panel */
+.h-scroll-panel > * {
+  min-height: 100vh;
+}
+
+/* ── Bottom nav dots ── */
+.section-nav {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6rem;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+.nav-dot:hover {
+  opacity: 0.85;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-dot.active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-dot-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.nav-dot-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.nav-dot.active .nav-dot-label {
+  color: #00ff41;
+}
+
+/* ── Prev / Next arrows ── */
+.scroll-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-arrow:disabled {
+  opacity: 0.15;
+  cursor: default;
+}
+
+.scroll-arrow:not(:disabled):hover {
+  background: rgba(0, 255, 65, 0.2);
+  border-color: #00ff41;
+  color: #00ff41;
+  box-shadow: 0 0 16px rgba(0, 255, 65, 0.3);
+}
+
+.scroll-arrow--left  { left:  1rem; }
+.scroll-arrow--right { right: 1rem; }
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .nav-dot-label { display: none; }
+  .nav-dot { padding: 6px 8px; }
+  .scroll-arrow { display: none; }
+}
