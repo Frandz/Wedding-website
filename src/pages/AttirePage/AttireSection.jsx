@@ -23,6 +23,7 @@ const AttireSection = () => {
   const [termLine, setTermLine] = useState(0);
   const [typed, setTyped]     = useState("");
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [lightbox, setLightbox]   = useState(false);
   const canvasRef = useRef(null);
 
   // Terminal typing effect
@@ -142,11 +143,13 @@ const AttireSection = () => {
               <div className="img-frame-glow" />
               <div className="img-corner c1"/><div className="img-corner c2"/>
               <div className="img-corner c3"/><div className="img-corner c4"/>
+              <div className="img-click-hint">🔍 Tap to zoom</div>
               <img
                 src={WeddingAttire}
                 alt="Wedding Guest Attire Guide"
                 className="attire-main-img"
                 onLoad={() => setImgLoaded(true)}
+                onClick={() => setLightbox(true)}
               />
               <div className="img-caption">
                 <span className="caption-sym">✦</span>
@@ -183,6 +186,7 @@ const AttireSection = () => {
               {[
                 { hex: "#F6D365", name: "Sunlit Gold" },
                 { hex: "#E8B84B", name: "Honey Amber" },
+                { hex: "#D4A017", name: "Deep Saffron" },
                 { hex: "#C8953A", name: "Burnished Gold" },
                 { hex: "#A67C2E", name: "Antique Gold" },
               ].map((c, i) => (
@@ -206,6 +210,20 @@ const AttireSection = () => {
                 </div>
               ))}
             </div>
+            <p className="palette-label" style={{ marginTop: "0.6rem" }}>🤵 Groom & Groomsmen</p>
+            <div className="palette-swatches">
+              {[
+                { hex: "#1a1a1a", name: "Black" },
+                { hex: "#191970", name: "Midnight Blue" },
+                { hex: "#36454F", name: "Charcoal Gray" },
+                { hex: "#5C4033", name: "Brown" },
+              ].map((c, i) => (
+                <div key={i} className="swatch-item">
+                  <div className="swatch" style={{ background: c.hex }} />
+                  <span className="swatch-name">{c.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="rules-stamp">
@@ -213,6 +231,23 @@ const AttireSection = () => {
           </div>
         </aside>
       </div>
+
+      {/* ── Lightbox ── */}
+      {lightbox && (
+        <div className="attire-lightbox" onClick={() => setLightbox(false)}>
+          <div className="lightbox-inner" onClick={e => e.stopPropagation()}>
+            <div className="lightbox-bar">
+              <span className="tdot r"/><span className="tdot y"/><span className="tdot g"/>
+              <span className="lightbox-title">attire_guide.png — FULL VIEW</span>
+              <button className="lightbox-close" onClick={() => setLightbox(false)}>✕</button>
+            </div>
+            <div className="lightbox-img-wrap">
+              <img src={WeddingAttire} alt="Wedding Guest Attire Guide Full View" className="lightbox-img" />
+            </div>
+            <p className="lightbox-hint">Pinch to zoom · Tap outside to close</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
